@@ -25,7 +25,7 @@ namespace SoftPeople_Lite
             Length = length;
             _modulesList = new List<Module>();
         }
-
+        # region Properties
         public string Name
         {
             get { return _name; }
@@ -69,12 +69,16 @@ namespace SoftPeople_Lite
         {
             get { return _numOfStudents; }
         }
+        # endregion
 
+        // Increments teh number of students
         public void AddStudent()
         {
             _numOfStudents++;
         }
 
+        // decrements the number of students
+        // unused as no way to remove students from a course...
         internal void RemoveStudent()
         {
             _numOfStudents--;

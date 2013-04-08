@@ -9,14 +9,18 @@ using System.Windows.Forms;
 
 namespace SoftPeople_Lite
 {
-    // Displays information about each program
     public partial class ProgrammeDetailsForm : Form
     {
         List<Module> moduleList = new List<Module>();
+        Programme _programme;
+        DetailsForm _parentForm;
 
+        // Displays a form that shows information about a program.
         public ProgrammeDetailsForm(Programme programme, DetailsForm parentForm)
         {
             InitializeComponent();
+            _programme = programme;
+            _parentForm = parentForm;
 
             textBox1.Text = programme.Name;
             textBox2.Text = programme.ProgramLeader.Name;
@@ -30,20 +34,26 @@ namespace SoftPeople_Lite
             }
         }
 
-        // Show the details of the module selected.
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        // Need to show a new form for the module details not display it in a panel.
-        /*
+        // Displays details about each module in the programme.
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             panel1.Visible = true;
             textBox4.Text = moduleList[listBox1.SelectedIndex].ModuleLeader.Name;
             label9.Text = moduleList[listBox1.SelectedIndex].NumOfStudents.ToString();
-        }       
-         */
+        }
+
+        // Show details form for  the academic who leads this programme.
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DetailsForm detailsForm = new DetailsForm(_programme.ProgramLeader, _parentForm.ParentForm);
+            detailsForm.Show();
+        }
+
+        // Show details form for the academic who leads the selected module.
+        private void button5_Click(object sender, EventArgs e)
+        {
+            DetailsForm detailsForm = new DetailsForm(moduleList[listBox1.SelectedIndex].ModuleLeader, _parentForm.ParentForm);
+            detailsForm.Show();
+        }
     }
 }

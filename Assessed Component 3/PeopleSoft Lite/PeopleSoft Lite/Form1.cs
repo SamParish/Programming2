@@ -11,17 +11,29 @@ namespace SoftPeople_Lite
 {
     public partial class Form1 : Form
     {
-        PeopleList peopleList = new PeopleList();
-        List<Programme> ProgrammeList = new List<Programme>();
+        PeopleList peopleList = new PeopleList();        
         List<Person> resultsList = new List<Person>();
-        List<Module> moduleList = new List<Module>();
+        private List<Module> moduleList = new List<Module>();
+        private List<Programme> programmeList = new List<Programme>();        
 
         public Form1()
         {
             InitializeComponent();
             PopulateData();
         }
+        # region Properties
+        public List<Module> ModuleList
+        {
+            get { return moduleList; }
+        }
 
+        public List<Programme> ProgrammeList
+        {
+            get { return programmeList; }
+        }
+        # endregion
+
+        // Creates example data to test the programs functionality with.
         private void PopulateData()
         {
             Programme programme;
@@ -29,6 +41,12 @@ namespace SoftPeople_Lite
             Student student;
             Admin admin;
             Module module;
+
+            // Clears old data.
+            peopleList.Clear();
+            moduleList.Clear();
+            programmeList.Clear();
+            resultsList.Clear();
 
             // Create Academic staff examples, assign them a course if applicable and then add them to the people list.
             academic = new Academic("Dave Vhooris", 1001636, new DateTime(1974, 3, 28), "I dont know!", "E504", "BCL");
@@ -50,18 +68,18 @@ namespace SoftPeople_Lite
             programme = new Programme("Computer Science", peopleList.Find(x => x.Name == "Wayne Rippin")as Academic, 4);
             programme.ModulesList.Add(moduleList.Find( x => x.Name == "Programming 1"));
             programme.ModulesList.Add(moduleList.Find( x => x.Name == "Foundations of Computer Science"));
-            ProgrammeList.Add(programme);
+            programmeList.Add(programme);
             programme = new Programme("Computer Games Programming", peopleList.Find(x => x.Name == "Tommy Thompson") as Academic, 4);
             programme.ModulesList.Add(moduleList.Find( x => x.Name == "Programming 1"));
             programme.ModulesList.Add(moduleList.Find( x => x.Name == "Foundations of Computer Science"));
-            ProgrammeList.Add(programme);
+            programmeList.Add(programme);
 
             // Create Students            
-            student = new Student("Samuel Parish", 100186328, new DateTime(1991, 8, 6), "62 Church Street, Horsley, Derby", "62 Church Street, Horsley, Derby", ProgrammeList.Find(x => x.Name == "Computer Science"), 1);
+            student = new Student("Samuel Parish", 100186328, new DateTime(1991, 8, 6), "62 Church Street, Horsley, Derby", "62 Church Street, Horsley, Derby", programmeList.Find(x => x.Name == "Computer Science"), 1);
             peopleList.Add(student);
-            student = new Student("John Odi", 100243528, new DateTime(1993, 10, 17), "Somewhere, Nottingham", "Somewhere, Nottingham", ProgrammeList.Find(x => x.Name == "Computer Science"), 1);
+            student = new Student("John Odi", 100243528, new DateTime(1993, 10, 17), "Somewhere, Nottingham", "Somewhere, Nottingham", programmeList.Find(x => x.Name == "Computer Science"), 1);
             peopleList.Add(student);
-            student = new Student("Reece Beardsall", 100178539, new DateTime(1993, 10, 17), "Barnsley", "Peak Court", ProgrammeList.Find(x => x.Name == "Computer Games Programming"), 1);
+            student = new Student("Reece Beardsall", 100178539, new DateTime(1993, 10, 17), "Barnsley", "Peak Court", programmeList.Find(x => x.Name == "Computer Games Programming"), 1);
             peopleList.Add(student);
             
 
@@ -70,6 +88,7 @@ namespace SoftPeople_Lite
             peopleList.Add(admin);
         }
 
+        // Shows the search results in the list box.
         public void UpdateResults()
         {
             resultsListBox.Items.Clear();
@@ -79,6 +98,7 @@ namespace SoftPeople_Lite
             }
         }
 
+        // performs search through people list for anyone matching the search terms.
         private void searchButton_Click(object sender, EventArgs e)
         {
             if (criteriaComboBox.SelectedItem != null)
@@ -87,7 +107,7 @@ namespace SoftPeople_Lite
 
                 resultsList.Clear();
 
-                // Sets whether to serach for staff or students based on teh sate of the check boxes.
+                // Sets whether to serach for staff or students based on the sate of the check boxes.
                 if (staffCheckbox.Checked && studentCheckbox.Checked)
                 {
                     people = peopleList;
@@ -138,7 +158,7 @@ namespace SoftPeople_Lite
         // returns the query panel to is default state.
         private void resetButton_Click(object sender, EventArgs e)
         {
-            resultsList.Clear();
+            PopulateData();
             UpdateResults();
             studentCheckbox.Checked = false;
             staffCheckbox.Checked = false;            
@@ -151,8 +171,6 @@ namespace SoftPeople_Lite
         /// Opens a new form containing all the information about the individual selected.
         /// This information can be edited at a button press.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void detailsButton_Click(object sender, EventArgs e)
         {
             try

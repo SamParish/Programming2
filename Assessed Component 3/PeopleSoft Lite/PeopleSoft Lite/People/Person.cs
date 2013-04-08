@@ -13,6 +13,7 @@ namespace SoftPeople_Lite
         DateTime _dateOfBirth;
         string _address;
 
+        // Base constructor for decendant classes.
         public Person(string name, int ID, DateTime dob, string address)
         {
             ChangeName(name);
@@ -20,7 +21,7 @@ namespace SoftPeople_Lite
             _dateOfBirth = dob;
             Address = address;
         }
-        
+        # region Properties
         public string Forename
         {
             get { return _forename; }
@@ -73,6 +74,7 @@ namespace SoftPeople_Lite
             get { return _address; }
             set { _address = value; }
         }
+        # endregion
 
         /// <summary>
         /// Takes a string and splits it into substrings deliminated by a space.
@@ -83,7 +85,7 @@ namespace SoftPeople_Lite
             string[] splitName = newName.Split(' ');
             if (splitName.Length < 2)
             {
-                throw new FormatException("A person must have at least a forename and a surname seperated by spaces.");
+                throw new FormatException("A person must have a forename and a surname seperated by spaces.");
             }
             else
             {
@@ -92,18 +94,21 @@ namespace SoftPeople_Lite
             }
         }
 
+        /// <summary>
+        /// Returns true if the persons name contains the search term.
+        /// </summary>
         public bool HasName(string name)
         {
-            // returns true if the persons name contains the search term.
             name = name.ToLower();
             return Forename.ToLower().Contains(name) || Surname.ToLower().Contains(name);
         }
-
+        ///<summary>
+        /// Returns true if the ID searched matches exactly the persons ID.
+        /// </summary>
         public bool HasID(int id)
         {
             return IdentificationNumber == id;
         }
-
 
         /// <summary>
         /// Returns the data contained within the class as an array of strings.

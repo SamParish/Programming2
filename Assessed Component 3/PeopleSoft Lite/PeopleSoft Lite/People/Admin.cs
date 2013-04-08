@@ -10,22 +10,22 @@ namespace SoftPeople_Lite
         string _role;
 
         /// <summary>
-        ///  Constructor.
+        /// Creates a new instance of an Admin staff.
         /// </summary>
-        /// <param name="role">The role of this person in their place of work.</param>
-
         public Admin(string name, int ID, DateTime dob, string homeAddress, string office, string role)
             : base(name, ID, dob, homeAddress, office)
         {
             Role = role;
         }
 
+        // The role this person has at the university.
         public string Role
         {
             get { return _role; }
             set { _role = value; }
         }
 
+        // returns an array of strings containing the details stored for this admin staff.
         override public string[] GetDetails()
         {
             string[] output = new string[6];

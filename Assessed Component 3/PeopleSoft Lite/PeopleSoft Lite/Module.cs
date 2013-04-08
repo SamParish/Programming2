@@ -9,8 +9,9 @@ namespace SoftPeople_Lite
     {
         string _name;
         Academic _moduleLeader;
-        int _numOfStudents;       
+        int _numOfStudents;
 
+        // An instance of module that keeps track of the number of students that are enrolled and who leads the module.
         public Module(string name, Academic moduleLeader)
         {
             Name = name;
@@ -18,6 +19,7 @@ namespace SoftPeople_Lite
             NumOfStudents = 0;
         }
 
+        #region Properties
         public string Name
         {
             get { return _name; }
@@ -48,6 +50,6 @@ namespace SoftPeople_Lite
             get { return _numOfStudents; }
             set { _numOfStudents = value; }
         }
-        
+        # endregion
     }
 }

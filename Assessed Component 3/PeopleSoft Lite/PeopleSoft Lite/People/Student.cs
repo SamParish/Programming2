@@ -36,7 +36,7 @@ namespace SoftPeople_Lite
                 AddModule(module);
             }
         }
-
+        # region Properties
         public override int IdentificationNumber
         {
             get
@@ -89,19 +89,23 @@ namespace SoftPeople_Lite
         {
             get { return _modulesList; }
         }
+        # endregion
 
+        // Adds a module to this students list of modules studied and increments the number of students on that module.
         public void AddModule(Module module)
         {
             ModulesList.Add(module);
             module.NumOfStudents++;
         }
 
+        // removes a module to this students list of modules studied and decrements the number of students on that module.
         public void RemoveModule(Module module)
         {
             ModulesList.Remove(module);
             module.NumOfStudents--;
         }
 
+        // Returns an array of strings containing all the details of the student.
         override public string[] GetDetails()
         {
             string[] output = new string[7];

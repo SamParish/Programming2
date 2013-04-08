@@ -11,6 +11,24 @@ namespace SoftPeople_Lite
         List<Module> _modulesLed;
         List<Programme> _programmesLed;
 
+        /// <summary>
+        /// Creates a new instance of an academic staff member.
+        /// </summary>
+        /// <param name="name">Name of the Academic</param>
+        /// <param name="ID">Academics ID number, 7 digits long.</param>
+        /// <param name="dob">Date of birth in dd/mm/yyyy format.</param>
+        /// <param name="homeAddress">Home address.</param>
+        /// <param name="office">The academics office.</param>
+        /// <param name="school">To which school they belong in the university.</param>
+        public Academic(string name, int ID, DateTime dob, string homeAddress, string office, string school)
+            : base(name, ID, dob, homeAddress, office)
+        {
+            School = school;
+            _programmesLed = new List<Programme>();
+            _modulesLed = new List<Module>();
+        }
+
+        # region Properties 
         public string School
         {
             get { return _school; }
@@ -26,43 +44,46 @@ namespace SoftPeople_Lite
         {
             get { return _programmesLed; }
         }
+        # endregion
 
+        // Sets this Academic to lead a program, removes this program from old leader and updates the programmes to reflect these changes.
         public void AddProgrammeLed(Programme programme)
         {
-            ProgrammesLed.Add(programme);
-            if (programme.ProgramLeader != this)
+            if (!ProgrammesLed.Contains(programme))
             {
-                programme.ProgramLeader = this;
+                ProgrammesLed.Add(programme);
+                if (programme.ProgramLeader != this)
+                {
+                    programme.ProgramLeader = this;
+                }
             }
         }
 
+        // Removes a programme from this academic.
         public void RemoveProgrammeLed(Programme programme)
         {
             ProgrammesLed.Remove(programme);
         }
 
+        // Sets this Academic to lead a module, removes this module from old leader and updates the modules to reflect these changes.
         public void AddModuleLed(Module module)
         {
-            ModulesLed.Add(module);
-            if (module.ModuleLeader != this)
+            if (!ModulesLed.Contains(module))
             {
-                module.ModuleLeader = this;
+                ModulesLed.Add(module);
+                if (module.ModuleLeader != this)
+                {
+                    module.ModuleLeader = this;                
+                }       
             }
         }
-
+        // Removes the module from this academic.
         public void RemoveModuleLed(Module module)
         {
             ModulesLed.Remove(module);
-        }
+        }       
 
-        public Academic(string name, int ID, DateTime dob, string homeAddress, string office, string school)
-            : base (name, ID, dob, homeAddress, office)
-        {
-            School = school;
-            _programmesLed = new List<Programme>();
-            _modulesLed = new List<Module>();
-        }
-
+        // returns an array of strings containing the details stored for this academic.
         override public string[] GetDetails()
         {
             string[] output = new string[8];

@@ -5,11 +5,12 @@ using System.Text;
 
 namespace SoftPeople_Lite
 {
+    // A modification of List<Person> that allows all the styaff to be returned and all the students to be returned.
     class PeopleList : List<Person>
     {
+        // Gets all the studnets....
         public IEnumerable<Person> GetAllStudents()
-        {
-            // Gets all the studnets....
+        {            
             foreach (Person currentPerson in this)
             {
                 if (currentPerson is Student)
@@ -19,9 +20,9 @@ namespace SoftPeople_Lite
             }
         }
 
+        // Gets all the staff....
         public IEnumerable<Person> GetAllStaff()
-        {
-            // Gets all the staff....
+        {            
             foreach (Person currentPerson in this)
             {
                 if (currentPerson is Staff)
@@ -30,6 +31,5 @@ namespace SoftPeople_Lite
                 }
             }
         }
-
     }
 }
