@@ -36,6 +36,8 @@ namespace SoftPeople_Lite
                 TextBox6.Text = student.GetDetails()[5];
                 button5.Text = "Show Details";
                 label7.Text = "Year of study:";
+                button6.Width = 87;
+                button1.Visible = false;
                 TextBox7.Text = student.GetDetails()[6];
                 label8.Visible = false;
                 button7.Visible = false;
@@ -57,16 +59,23 @@ namespace SoftPeople_Lite
                 {
                     comboBox2.Items.Add(module.Name);
                 }
-                comboBox2.SelectedIndex = 0;
-                button6.Text = "Details";
+                if (academic.ModulesLed.Count != 0)
+                {
+                    comboBox2.SelectedIndex = 0;
+                    button6.Text = "Details";
+                }
 
                 label8.Text = "ProgrammesLed:";
                 foreach (Programme programme in academic.ProgrammesLed)
                 {
                     comboBox1.Items.Add(programme.Name);
                 }
-                comboBox1.SelectedIndex = 0;
-                button7.Text = "Details";
+                if (academic.ProgrammesLed.Count != 0)
+                {
+                    comboBox1.SelectedIndex = 0;
+                    button7.Text = "Details";
+                }
+                button6.Text = "Add";
             }
             else if (person is Admin)
             {
@@ -256,18 +265,22 @@ namespace SoftPeople_Lite
                 if (TextBox7.ReadOnly == true)
                 {
                     button6.Text = "Commit";
-                    TextBox6.ReadOnly = false;
+                    TextBox7.ReadOnly = false;
                 }
                 else
                 {
-                    button6.Text = "Edit";
-                    TextBox7.ReadOnly = true;
                     int result;
 
                     // set the students year of study to what is in the text box if its a number.
                     if (int.TryParse(TextBox7.Text, out result))
                     {
                         student.YearOfStudy = result;
+                        button6.Text = "Edit";
+                        TextBox7.ReadOnly = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("You must enter a valid number for the students year of study.");
                     }
                 }
             }
@@ -275,7 +288,10 @@ namespace SoftPeople_Lite
             {
                 Academic academic = _person as Academic;
                 
-                // 
+                // Add a module to ModulesLed
+                // probably need to pass this form into it... dont fogrtet
+                SelectionWindow modulesForm = new SelectionWindow();
+                modulesForm.Show();
 
             }
         }
